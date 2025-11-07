@@ -1,0 +1,134 @@
+"use client";
+
+import Link from "next/link";
+import { useAuthStore } from "@/stores/useAuthStore";
+import { LogOut, User } from "lucide-react";
+import { usePathname } from "next/navigation";
+import { useRouter } from "next/navigation";
+import { useState, useEffect, useRef } from "react";
+import toast from "react-hot-toast";
+
+export const ProfileMenu = () => {
+  const pathname = usePathname();
+  const router = useRouter();
+
+  const { user, logout } = useAuthStore();
+  const [isOpen, setIsOpen] = useState<boolean>(false);
+  const [isLoggingOut, setIsLoggingOut] = useState<boolean>(false);
+
+  const dropdownRef = useRef<HTMLDivElement>(null);
+
+  const [activeLink, setActiveLink] = useState("");
+  const links = [
+    { name: "Profile", link: "/profile" },
+  ];
+
+  useEffect(() => {
+    setActiveLink(pathname);
+  }, [pathname]);
+
+  // Function to toggle menu visibility
+  const toggleMenu = () => {
+    setIsOpen(!isOpen);
+  };
+
+  // Effect to handle clicks outside the dropdown to close it
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      if (
+        dropdownRef.current &&
+        !dropdownRef.current.contains(event.target as Node)
+      ) {
+        setIsOpen(false);
+      }
+    };
+
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, []);
+
+  const protectedPages = ["/admin", "/profile", "/cart", "/checkout"];
+  const isProtectedPage = protectedPages.some((page) =>
+    pathname.startsWith(page)
+  );
+
+  const handleLogOut = async () => {
+    try {
+      setIsLoggingOut(true);
+      await logout();
+      if (isProtectedPage) router.push("/");
+    } catch (error) {
+      toast.error("Logout failed");
+      console.error("Logout failed: " + error);
+    } finally {
+      setIsLoggingOut(false);
+    }
+  };
+
+  return (
+    <div ref={dropdownRef} className="relative inline-block text-left">
+      {/* Profile Image Button */}
+      <button
+        className="flex items-center justify-center"
+        type="button"
+        onClick={toggleMenu}
+        aria-haspopup="true"
+        aria-expanded={isOpen}
+      >
+        {!user?.imageUrl ? (
+          <User className="cursor-pointer fill-[#13ec5b]" />
+        ) : (
+          // eslint-disable-next-line
+          <img
+            src={user?.imageUrl}
+            alt="profile-picture"
+            className="rounded-full w-6 h-6 md:w-10 md:h-10 object-cover border border-slate-400  hover:border-blue-500 transition-all"
+          />
+        )}
+      </button>
+
+      {/* Dropdown Menu */}
+      <div
+        className={`origin-top-right absolute right-0 mt-2 w-48 rounded-md shadow-lg bg-[#112217] ring-1 ring-[#13ec5b] ring-opacity-5 focus:outline-none transition ease-out duration-100 z-50 ${
+          isOpen
+            ? "transform opacity-100 scale-100"
+            : "transform opacity-0 scale-95 pointer-events-none"
+        }`}
+        role="menu"
+        aria-orientation="vertical"
+        aria-labelledby="menu-button"
+      >
+        <div className="py-2" role="none">
+          {links.map((link) => (
+            <Link
+              key={link.name}
+              href={link.link}
+              onClick={() => {
+                setActiveLink(link.link);
+                setIsOpen(false);
+              }}
+              className="block w-full text-left px-4 py-2 text-sm text-white font-medium transition-colors duration-200 hover:text-gray-300"
+              aria-current={activeLink === link.link ? "page" : undefined}
+            >
+              {link.name}
+            </Link>
+          ))}
+
+          {/* Separator */}
+          <div className="border-t border-slate-200 dark:border-slate-700 my-1" />
+
+          <button
+            onClick={handleLogOut}
+            className="flex items-center gap-2 w-full text-left px-4 py-2 text-sm font-medium text-white hover:bg-red-400 transition-colors duration-200"
+          >
+            <LogOut className="w-4 h-4" />
+
+            <span>{isLoggingOut ? "Memproses..." : "Keluar"}</span>
+          </button>
+        </div>
+      </div>
+    </div>
+  );
+};

@@ -4,6 +4,7 @@ import "./globals.css";
 
 import { Footer } from "@/components/footer/footer";
 import { UserNavbar } from "@/components/navbar/userNavbar";
+import { Toaster } from "react-hot-toast";
 
 const inter = Inter({
   subsets: ["latin"],
@@ -26,6 +27,7 @@ export default function RootLayout({
         <UserNavbar />
         <div className="relative flex h-auto min-h-screen w-full flex-col bg-[#112217] dark group/design-root overflow-x-clip">
           {children}
+          <Toaster position="top-right" />
         </div>
         <Footer />
       </body>

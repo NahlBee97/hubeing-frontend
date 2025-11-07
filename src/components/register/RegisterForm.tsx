@@ -1,10 +1,15 @@
-"use client"
+"use client";
 
 import { RegisterSchema } from "@/schemas/authSchemas";
-import { useFormik, FormikHelpers } from "formik";
+import { useFormik } from "formik";
 import { FormTextInput } from "../inputs";
 import { FormButton } from "../submitButton";
 import { FormLink } from "../formLink";
+import api from "@/lib/axios";
+import toast from "react-hot-toast";
+import { useRouter } from "next/navigation";
+import { useState } from "react";
+import { CheckBox } from "../checkBox";
 
 interface RegiterFormValues {
   name: string;
@@ -13,6 +18,10 @@ interface RegiterFormValues {
 }
 
 export const RegisterForm = () => {
+  const router = useRouter();
+
+  const [showPassword, setShowPassword] = useState<boolean>(false);
+
   const formik = useFormik<RegiterFormValues>({
     initialValues: {
       name: "",
@@ -20,24 +29,24 @@ export const RegisterForm = () => {
       password: "",
     },
     validationSchema: RegisterSchema,
-    onSubmit: (
-      values: RegiterFormValues,
-      { setSubmitting }: FormikHelpers<RegiterFormValues> // Use FormikHelpers
-    ) => {
-      console.log(
-        `Logging in with email: ${values.email} and Password: ${values.password}`
-      );
-      setTimeout(() => {
-        setSubmitting(false);
-        console.log("Login successful (simulated)!");
-      }, 1000);
+    onSubmit: async (values: RegiterFormValues) => {
+      try {
+        await api.post(`/api/auth/register`, values);
+
+        toast.success("Login Successfully, Please Login");
+
+        router.push("/login");
+      } catch (error) {
+        console.error(error);
+        toast.error("Fail to register");
+      }
     },
   });
 
   return (
     <div className="flex flex-col w-full max-w-md bg-[#102316] rounded-xl shadow-2xl overflow-hidden">
       <h2 className="text-white tracking-light text-[28px] font-bold leading-tight text-center pb-3 pt-6">
-        Welcome back
+        Create your account
       </h2>
 
       <form
@@ -67,18 +76,24 @@ export const RegisterForm = () => {
           error={formik.errors.email}
           touched={formik.touched.email}
         />
-
-        <FormTextInput
-          id="password"
-          label="Password"
-          type="password"
-          placeholder="Enter your password"
-          value={formik.values.password}
-          onChange={formik.handleChange}
-          onBlur={formik.handleBlur}
-          error={formik.errors.password}
-          touched={formik.touched.password}
-        />
+        <div className="w-full">
+          <FormTextInput
+            id="password"
+            label="Password"
+            type={showPassword ? "text" : "password"}
+            placeholder="Enter your password"
+            value={formik.values.password}
+            onChange={formik.handleChange}
+            onBlur={formik.handleBlur}
+            error={formik.errors.password}
+            touched={formik.touched.password}
+          />
+          <CheckBox
+            isChecked={showPassword}
+            onChecked={() => setShowPassword(!showPassword)}
+            label="Lihat Password"
+          />
+        </div>
 
         <div className="w-full pt-2">
           <FormButton type="submit" disabled={formik.isSubmitting}>
