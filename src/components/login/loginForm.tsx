@@ -24,7 +24,6 @@ export const LoginForm = () => {
   const router = useRouter();
   const { setAccessToken, login } = useAuthStore();
 
-  const [isCorrectPassword, setIsCorrectPassword] = useState<boolean>(true);
   const [showPassword, setShowPassword] = useState<boolean>(false);
 
   const formik = useFormik<LoginFormValues>({
@@ -50,7 +49,6 @@ export const LoginForm = () => {
       } catch (error) {
         if (axios.isAxiosError(error) && error.response) {
           if (error.response.data.message === "Incorrect Password")
-            // setIsCorrectPassword(false);
           toast.error("Password Salah!");
         } else {
           toast.error("An unexpected error occurred");
@@ -86,15 +84,6 @@ export const LoginForm = () => {
           error={formik.errors.email}
           touched={formik.touched.email}
         />
-
-        {!isCorrectPassword && (
-          <div
-            className="text-xs text-red-500 mb-2 cursor-pointer hover:text-blue-500"
-            onClick={handleResetPassword}
-          >
-            Lupa Password?
-          </div>
-        )}
 
         <div className="w-full">
           <FormTextInput

@@ -33,7 +33,7 @@ export const RegisterForm = () => {
       try {
         await api.post(`/api/auth/register`, values);
 
-        toast.success("Login Successfully, Please Login");
+        toast.success("Register Successfully, Please Login");
 
         router.push("/login");
       } catch (error) {

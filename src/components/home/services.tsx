@@ -22,13 +22,6 @@ export const ServicesSection = () => {
       imageUrl:
         "https://lh3.googleusercontent.com/aida-public/AB6AXuBPKF6AQZcF7lFTY3IUDNxC7-km-KCk1lwVi-YyUbVov8kxHiHpkMG-SCuz2aUWbmalEgZ3mKfnazAzyfYyeNI-RkC6l8ou1Td5p_ftQH4EMNsEyI9_y1peGs1rxvHyJ1flRGNVCmPgStzjlxTkNYEDCDFVSluwMcoFNVf50ZJ48zRAT6TU8gTjRJ3RVy-SYgLMpWglQThOWthBly4E3TGhCTGgHAMtGiTFMq06jdlxa_M8jRpT-YPvRdqD1yelgDihpvIyZpCBdXJV",
     },
-    {
-      title: "Nutrition Planning",
-      description:
-        "Dietary guidance and meal planning for a healthier lifestyle.",
-      imageUrl:
-        "https://lh3.googleusercontent.com/aida-public/AB6AXuCC1uyVCuwr47wIOU8Zne4wfUXV3Ons01YtzR3JGVhFW7tIxWUtFVIvvNAiwviwafEJ-8C-DhIkGcgwBe-0giV3XAP7Nm_V3vyf0ZpFh-gVVEelW2vfxfrnTyqONDl_0i3EBCw96bQgOBbXnG58eyS6bpH50gVJZ2cNunZzQOaduVdHc2BCMjTVC3wcllnq9O5wHAKHoytzfcZWISO520KMJOt69sKbX6hKqaXorUJ6-bGVH34TWOx0NVYaVhhHF_5eeMeQ6CXw0CFy",
-    },
   ];
 
   return <SectionScroller title="Services Offered" items={services} />;
