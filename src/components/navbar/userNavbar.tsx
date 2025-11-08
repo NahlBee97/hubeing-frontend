@@ -32,8 +32,16 @@ export const UserNavbar = () => {
 
       {/* Desktop Navigation (hidden on small screens) */}
       <nav className="hidden md:flex flex-1 justify-end items-center gap-8">
-        <NavLinks isLoggedIn={isLoggedIn} />
-        {isLoggedIn ? <ProfileMenu /> : <AuthButtons />}
+        <NavLinks
+          mobile={false}
+          isLoggedIn={isLoggedIn}
+          onClickLink={() => null}
+        />
+        {isLoggedIn ? (
+          <ProfileMenu />
+        ) : (
+          <AuthButtons mobile={false} onButtonClick={() => null} />
+        )}
       </nav>
 
       {/* Mobile Menu Button (visible on small screens) */}
@@ -51,9 +59,16 @@ export const UserNavbar = () => {
       {isMobileMenuOpen && (
         <div className="md:hidden absolute top-full left-0 w-full h-screen bg-[#112217] bg-opacity-95 z-50">
           <nav className="flex flex-col items-center justify-center gap-8 pt-16">
-            <NavLinks mobile={true} isLoggedIn={isLoggedIn} />
+            <NavLinks
+              mobile={true}
+              isLoggedIn={isLoggedIn}
+              onClickLink={() => setIsMobileMenuOpen(false)}
+            />
             <div className="border-t border-[#23482f] w-3/4 my-4"></div>
-            <AuthButtons mobile={true} />
+            <AuthButtons
+              mobile={true}
+              onButtonClick={() => setIsMobileMenuOpen(false)}
+            />
           </nav>
         </div>
       )}

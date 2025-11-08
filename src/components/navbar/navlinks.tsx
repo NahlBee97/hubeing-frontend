@@ -1,6 +1,12 @@
 import Link from "next/link";
 
-export const NavLinks = ({ mobile = false, isLoggedIn = true }) => {
+interface props {
+  mobile: boolean;
+  isLoggedIn: boolean;
+  onClickLink: () => void
+}
+
+export const NavLinks = ({ mobile = false, isLoggedIn = true, onClickLink }: props ) => {
   const loggedInLinks = [
     { name: "Home", link: "/" },
     { name: "About", link: "/about" },
@@ -24,6 +30,7 @@ export const NavLinks = ({ mobile = false, isLoggedIn = true }) => {
         <Link
           key={link.name}
           href={link.link}
+          onClick={onClickLink}
           className="text-white font-medium leading-normal hover:text-gray-300"
         >
           {link.name}
