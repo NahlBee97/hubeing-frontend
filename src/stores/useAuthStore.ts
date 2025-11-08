@@ -59,13 +59,15 @@ export const useAuthStore = create<AuthState>()(
         });
       },
 
-      initializeAuth: () => {
+      initializeAuth: async () => {
         // Check if we have stored auth data and validate it
-        const { accessToken, user } = get();
-        const hasValidAuth = !!(accessToken && user);
+        const { accessToken } = get();
+        const response = await api.post("api/auth/check", {accessToken});
+
+        const { isLoggedIn } = response.data;
 
         set({
-          isLoggedIn: hasValidAuth,
+          isLoggedIn,
           isAuthLoading: false,
         });
       },
