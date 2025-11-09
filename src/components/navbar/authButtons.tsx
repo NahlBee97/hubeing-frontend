@@ -1,6 +1,6 @@
 "use client"
 
-import { useRouter } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 
 interface props {
   mobile: boolean;
@@ -9,6 +9,7 @@ interface props {
 
 export const AuthButtons = ({ mobile = false, onButtonClick }: props) => {
   const router = useRouter();
+  const pathname = usePathname();
   return (
     <div
       className={`flex ${
@@ -19,7 +20,7 @@ export const AuthButtons = ({ mobile = false, onButtonClick }: props) => {
         className="flex min-w-[84px] w-full md:w-auto max-w-[480px] cursor-pointer items-center justify-center overflow-hidden rounded-lg h-10 px-4 bg-[#13ec5b] text-[#112217] text-sm font-bold leading-normal tracking-[0.015em] hover:bg-[#13ec5b]/90"
         onClick={() => {
           onButtonClick();
-          router.push("/login");
+          router.push(`/login?callbackUrl=${pathname}`);
         }}
         >
         <span className="truncate">Login</span>

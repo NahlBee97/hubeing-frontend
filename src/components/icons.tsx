@@ -120,3 +120,60 @@ export const InstagramIcon = () => (
   </svg>
 );
 
+export const CaretLeftIcon = () => (
+  <div
+    className="text-white flex size-10 items-center justify-center"
+    data-icon="CaretLeft"
+    data-size="18px"
+    data-weight="regular"
+  >
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      width="18px"
+      height="18px"
+      fill="currentColor"
+      viewBox="0 0 256 256"
+    >
+      <path d="M165.66,202.34a8,8,0,0,1-11.32,11.32l-80-80a8,8,0,0,1,0-11.32l80-80a8,8,0,0,1,11.32,11.32L91.31,128Z"></path>
+    </svg>
+  </div>
+);
+
+export const CaretRightIcon = () => (
+  <div
+    className="text-white flex size-10 items-center justify-center"
+    data-icon="CaretRight"
+    data-size="18px"
+    data-weight="regular"
+  >
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      width="18px"
+      height="18px"
+      fill="currentColor"
+      viewBox="0 0 256 256"
+    >
+      <path d="M181.66,133.66l-80,80a8,8,0,0,1-11.32-11.32L164.69,128,90.34,53.66a8,8,0,0,1,11.32-11.32l80,80A8,8,0,0,1,181.66,133.66Z"></path>
+    </svg>
+  </div>
+);
+
+export const PlusIcon = () => (
+  <div
+    className="text-white"
+    data-icon="Plus"
+    data-size="18px"
+    data-weight="regular"
+  >
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      width="18px"
+      height="18px"
+      fill="currentColor"
+      viewBox="0 0 256 256"
+    >
+      <path d="M224,128a8,8,0,0,1-8,8H136v80a8,8,0,0,1-16,0V136H40a8,8,0,0,1,0-16h80V40a8,8,0,0,1,16,0v80h80A8,8,0,0,1,224,128Z"></path>
+    </svg>
+  </div>
+);
+

@@ -12,8 +12,8 @@ import { decodeJwt } from "jose";
 import { IUser } from "@/interfaces/dataInterfaces";
 import { useRouter } from "next/navigation";
 import toast from "react-hot-toast";
-import { useState } from "react";
 import { CheckBox } from "../checkBox";
+import { useEffect, useState } from "react";
 
 interface LoginFormValues {
   email: string;
@@ -22,9 +22,18 @@ interface LoginFormValues {
 
 export const LoginForm = () => {
   const router = useRouter();
+
   const { setAccessToken, login } = useAuthStore();
 
   const [showPassword, setShowPassword] = useState<boolean>(false);
+
+  const [callbackUrl, setCallbackUrl] = useState<string | null>(null);
+
+  useEffect(() => {
+    const urlParams = new URLSearchParams(window.location.search);
+    // eslint-disable-next-line
+    setCallbackUrl(urlParams.get("callbackUrl"));
+  }, []);
 
   const formik = useFormik<LoginFormValues>({
     initialValues: {
@@ -44,12 +53,17 @@ export const LoginForm = () => {
 
         login(userData, accessToken);
 
-        router.push("/");
+        if (!callbackUrl) {
+          router.push("/");
+        } else {
+          router.push(callbackUrl);
+        }
+
         toast.success("Berhasil Login");
       } catch (error) {
         if (axios.isAxiosError(error) && error.response) {
           if (error.response.data.message === "Incorrect Password")
-          toast.error("Password Salah!");
+            toast.error("Password Salah!");
         } else {
           toast.error("An unexpected error occurred");
         }
@@ -111,9 +125,17 @@ export const LoginForm = () => {
         </div>
       </form>
 
-      <div className="flex items-center justify-center gap-2 px-4 py-5 bg-[#1a3824]/50">
-        <p className="text-sm text-white">Don`t have an account?</p>
-        <FormLink href="/register">Register</FormLink>
+      <div className="flex flex-col items-center justify-center gap-2 px-4 py-5 bg-[#1a3824]/50">
+        <div className="flex gap-2">
+          <p className="text-sm text-white">Don`t have an account?</p>
+          <FormLink href="/register">Register</FormLink>
+        </div>
+        <p
+          className="text-[#90cba4] text-xs font-normal leading-normal text-center underline cursor-pointer hover:text-[#b0e0c4] transition-colors"
+          onClick={handleResetPassword}
+        >
+          Forgot Password?
+        </p>
       </div>
     </div>
   );

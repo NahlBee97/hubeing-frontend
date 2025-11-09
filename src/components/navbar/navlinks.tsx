@@ -10,8 +10,8 @@ export const NavLinks = ({ mobile = false, isLoggedIn = true, onClickLink }: pro
   const loggedInLinks = [
     { name: "Home", link: "/" },
     { name: "About", link: "/about" },
-    { name: "Book Appointment", link: "/book-appointment"},
-    { name: "My Appointment", link: "/appointment"},
+    { name: "Book Appointment", link: "/booking"},
+    { name: "My Appointment", link: "/appointments"},
   ];
 
   const links = [

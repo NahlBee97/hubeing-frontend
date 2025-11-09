@@ -1,0 +1,99 @@
+"use client";
+
+import { useRef } from "react";
+
+interface prop {
+  isOpen: boolean;
+  onClose: () => void;
+  onConfirm: () => void;
+  title: string;
+  confirmText?: string;
+}
+
+export function ConfirmModal({
+  isOpen,
+  onClose,
+  onConfirm,
+  title,
+  confirmText,
+}: prop) {
+  const modalRef = useRef<HTMLDivElement>(null);
+
+  if (!isOpen) {
+    return null;
+  }
+
+  return (
+    <div
+      className="relative z-50"
+      aria-labelledby="modal-title"
+      role="dialog"
+      aria-modal="true"
+    >
+      {/* Modal Overlay */}
+      <div className="fixed inset-0 bg-black/50 transition-opacity" />
+
+      <div className="fixed inset-0 z-10 w-screen overflow-y-auto">
+        <div className="flex min-h-full items-center justify-center p-4 text-center sm:p-0">
+          {/* Modal Panel */}
+          <div
+            ref={modalRef}
+            className="relative transform overflow-hidden rounded-lg bg-[#22492f] text-left text-white shadow-xl transition-all sm:my-8 sm:w-full sm:max-w-lg"
+          >
+            <div className="px-4 pb-4 pt-5 sm:p-6 sm:pb-4">
+              <div className="flex flex-col items-center gap-2">
+                {/* Icon */}
+                <div className="mx-auto flex h-12 w-12 flex-shrink-0 items-center justify-center rounded-full bg-[#4cf676] sm:mx-0 sm:h-10 sm:w-10">
+                  {/* Inlined SVG to replace the imported Heroicon component */}
+                  <svg
+                    className="h-6 w-6 text-[#102315]"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    strokeWidth="1.5"
+                    stroke="currentColor"
+                    aria-hidden="true"
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      d="M12 9v3.75m-9.303 3.376c-.866 1.5.217 3.374 1.948 3.374h14.71c1.73 0 2.813-1.874 1.948-3.374L13.949 3.378c-.866-1.5-3.032-1.5-3.898 0L2.697 16.126zM12 15.75h.007v.008H12v-.008z"
+                    />
+                  </svg>
+                </div>
+                {/* Content */}
+                <div className="mt-3 text-center sm:ml-4 sm:mt-0 sm:text-left">
+                  <h3
+                    className="text-base font-semibold leading-6 text-white"
+                    id="modal-title"
+                  >
+                    {title}
+                  </h3>
+                </div>
+              </div>
+            </div>
+            {/* Action Buttons */}
+            <div className="bg-[#102315] px-4 py-3 flex gap-4 flex-row-reverse justify-center">
+              <button
+                type="button"
+                className="inline-flex w-full justify-center rounded-md bg-[#4cf676] px-5 py-2 text-sm font-bold text-[#102315] shadow-sm hover:bg-opacity-80 sm:ml-3 sm:w-auto disabled:bg-gray-400"
+                onClick={() => {
+                  onClose();
+                  onConfirm();
+                }}
+              >
+                {confirmText}
+              </button>
+              <button
+                type="button"
+                className="inline-flex w-full justify-center rounded-md bg-[#22492c] px-5 py-2 text-sm font-bold text-white shadow-sm hover:bg-opacity-80 sm:mt-0 sm:w-auto"
+                onClick={onClose}
+              >
+                Cancel
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+}
