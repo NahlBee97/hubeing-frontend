@@ -1,4 +1,4 @@
-"use client"
+"use client";
 
 import { getDayArrayForMonth } from "@/helper/getDaysInMonth";
 import { DayOfWeekHeader } from "./dayOfWeekHeader";
@@ -26,6 +26,10 @@ export const monthNames: string[] = [
 ];
 
 export const MonthCalendar = ({ monthIndex, year }: props) => {
+  const now = new Date();
+  const today = now.getDate();
+  const thisMonth = now.getMonth();
+
   const router = useRouter();
   const searchParams = useSearchParams();
   const activeDay = Number(searchParams.get("day"));
@@ -42,17 +46,17 @@ export const MonthCalendar = ({ monthIndex, year }: props) => {
   );
 
   const handleDateClick = (day: number) => {
-       // Create new URLSearchParams object from current params
-       const params = new URLSearchParams(searchParams.toString());
+    // Create new URLSearchParams object from current params
+    const params = new URLSearchParams(searchParams.toString());
 
-       params.set("year", year.toString())
+    params.set("year", year.toString());
 
-       params.set("month", monthIndex.toString());
+    params.set("month", monthIndex.toString());
 
-       params.set("day", day.toString());
+    params.set("day", day.toString());
 
-       // Navigate with new params
-       router.push(`/booking?${params.toString()}`);
+    // Navigate with new params
+    router.push(`/booking?${params.toString()}`);
   };
 
   return (
@@ -72,13 +76,16 @@ export const MonthCalendar = ({ monthIndex, year }: props) => {
         {days.map((day) => (
           <button
             key={day}
-            className="h-12 w-full text-white text-sm font-medium leading-normal"
+            className={`h-12 w-full text-white text-sm font-medium leading-normal disabled:cursor-not-allowed`}
+            disabled={day < today && monthIndex === thisMonth}
             onClick={() => handleDateClick(day)}
           >
             <div
               className={`flex size-full items-center justify-center rounded-full  ${
                 activeDay === day && monthIndex === activeMonth
                   ? "bg-[#13ec5b] text-[#112217]"
+                  : day < today && monthIndex === thisMonth
+                  ? "hover:bg-none text-gray-500"
                   : "hover:bg-[#22492f]"
               }`}
             >

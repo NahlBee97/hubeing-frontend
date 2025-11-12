@@ -2,7 +2,7 @@
 
 import toast from "react-hot-toast";
 import { ConfirmModal } from "../confirmModal";
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import api from "@/lib/axios";
 import { monthNames } from "./month";
@@ -29,16 +29,16 @@ export const AppointmentDetails = () => {
   const [isConfirmModalOpen, setIsConfirmModalOpen] = useState<boolean>(false);
   const [appointments, setAppointments] = useState<IAppointment[]>([]);
 
-  useEffect(() => {
+  const fetchAppointments = useCallback(async () => {
     if (!isLoggedIn) return;
 
-    const fetchAppointments = async () => {
-      const response = await api.get(`/api/appointment/${appointmentDate}`);
-      setAppointments(response.data.appointments);
-    };
-
-    fetchAppointments();
+    const response = await api.get(`/api/appointment/${appointmentDate}`);
+    setAppointments(response.data.appointments);
   }, [isLoggedIn, appointmentDate]);
+
+  useEffect(() => {
+    fetchAppointments();
+  }, [fetchAppointments]);
 
   const handleBookAppointment = async () => {
     try {
@@ -47,6 +47,8 @@ export const AppointmentDetails = () => {
     } catch (error) {
       console.error("Fail to make appointment:" + error);
       toast.error("Fail to make appointment");
+    } finally {
+      fetchAppointments();
     }
   };
 
