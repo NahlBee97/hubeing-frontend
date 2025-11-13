@@ -1,6 +1,6 @@
 "use client"
 
-interface props {
+interface FormTextInputProps {
   id: string;
   label: string;
   type?: string;
@@ -10,6 +10,15 @@ interface props {
   onBlur: (e: React.FocusEvent<HTMLInputElement>) => void; // Formik handler
   error?: string; // Formik error
   touched?: boolean; // Formik touched state
+}
+
+interface FormTextareaProps {
+  name: string;
+  placeholder: string;
+  value: string;
+  onChange: (e: React.ChangeEvent<HTMLTextAreaElement>) => void;
+  onBlur: (e: React.FocusEvent<HTMLTextAreaElement>) => void;
+  error?: string;
 }
 
 export const FormTextInput = ({
@@ -22,7 +31,7 @@ export const FormTextInput = ({
   onBlur,
   error,
   touched,
-}: props) => (
+}: FormTextInputProps) => (
   <div className="w-full">
     <label htmlFor={id} className="flex flex-col w-full">
       <p className="text-white text-base font-medium leading-normal pb-2">
@@ -48,3 +57,29 @@ export const FormTextInput = ({
     )}
   </div>
 );
+
+
+
+export const FormTextarea = ({
+  name,
+  placeholder,
+  value,
+  onChange,
+  onBlur,
+  error,
+}: FormTextareaProps) => (
+  <div className="flex w-full max-w-[480px] flex-wrap items-end gap-4 px-4 py-3">
+    <label className="flex flex-col min-w-40 flex-1">
+      <textarea
+        name={name}
+        placeholder={placeholder}
+        className="form-input flex w-full min-w-0 flex-1 resize-none overflow-hidden rounded-lg text-white focus:outline-0 focus:ring-0 border-none bg-[#22492c] focus:border-none min-h-36 placeholder:text-[#90cb9f] p-4 text-base font-normal leading-normal"
+        value={value}
+        onChange={onChange}
+        onBlur={onBlur}
+      ></textarea>
+      {error && <p className="text-red-400 text-sm mt-1">{error}</p>}
+    </label>
+  </div>
+);
+

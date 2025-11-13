@@ -6,7 +6,7 @@ export const AppointmentsHeader = () => {
   const router = useRouter();
   return (
     <div className="flex flex-col sm:flex-row sm:flex-wrap sm:items-center sm:justify-between gap-3 p-4">
-      <p className="text-white tracking-light text-3xl md:text-[32px] font-bold leading-tight min-w-72">
+      <p className="text-[#13ec5b] tracking-light text-3xl md:text-[32px] font-bold leading-tight min-w-72">
         My Appointments
       </p>
       <button

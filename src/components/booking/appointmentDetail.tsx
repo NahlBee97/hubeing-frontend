@@ -32,7 +32,7 @@ export const AppointmentDetails = () => {
   const fetchAppointments = useCallback(async () => {
     if (!isLoggedIn) return;
 
-    const response = await api.get(`/api/appointment/${appointmentDate}`);
+    const response = await api.get(`/api/appointments/${appointmentDate}`);
     setAppointments(response.data.appointments);
   }, [isLoggedIn, appointmentDate]);
 

@@ -24,11 +24,11 @@ const teamMembers = [
 export const AboutContent = () => (
   <div className="flex flex-1 justify-center px-4 py-5 md:px-10 lg:px-20">
     <div className="layout-content-container flex flex-col max-w-[960px] flex-1">
-      <h1 className="text-white tracking-light text-3xl md:text-[32px] font-bold leading-tight min-w-72 mb-2">
-        About LocalDoc
+      <h1 className="text-[#13ec5b] tracking-light text-3xl md:text-[32px] font-bold leading-tight min-w-72 mb-2">
+        About HuBeing
       </h1>
       <p className="text-white text-base font-normal leading-normal pb-3 pt-1">
-        At LocalDoc, our mission is to connect patients with the best local
+        At HuBeing, our mission is to connect patients with the best local
         healthcare providers, making healthcare more accessible and convenient
         for everyone. We believe in a patient-centric approach, where technology
         enhances the personal touch of healthcare.
@@ -64,7 +64,7 @@ export const AboutContent = () => (
         A Message from Our Founders
       </h2>
       <p className="text-white text-base font-normal leading-normal pb-3 pt-1">
-        We started LocalDoc with a simple idea: to make finding and booking a
+        We started HuBeing with a simple idea: to make finding and booking a
         doctor as easy as ordering groceries online. We`re passionate about
         leveraging technology to improve healthcare outcomes and patient
         experiences. Thank you for being a part of our journey.
