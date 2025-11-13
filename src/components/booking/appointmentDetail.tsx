@@ -42,7 +42,7 @@ export const AppointmentDetails = () => {
 
   const handleBookAppointment = async () => {
     try {
-      await api.post("/api/appointment", { appointmentDate });
+      await api.post("/api/appointments", { appointmentDate });
       toast.success("Appointment created successfully");
     } catch (error) {
       console.error("Fail to make appointment:" + error);

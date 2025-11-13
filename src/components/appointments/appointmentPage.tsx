@@ -24,10 +24,10 @@ export const AppointmentsPage = () => {
     const fetchAppointments = async () => {
       try {
         if (isPast === "true") {
-          const response = await api.get(`/api/appointment/user/${user?.id}?past=${isPast}`);
+          const response = await api.get(`/api/appointments/user/${user?.id}?past=${isPast}`);
           setAppointments(response.data.appointments);
         } else {
-          const response = await api.get(`/api/appointment/user/${user?.id}`);
+          const response = await api.get(`/api/appointments/user/${user?.id}`);
           setAppointments(response.data.appointments);
         }
       } catch (error) {
