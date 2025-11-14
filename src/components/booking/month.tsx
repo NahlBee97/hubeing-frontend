@@ -6,6 +6,8 @@ import { getFirstDayOfMonthWeekIndex } from "@/helper/getFirstDayOfTheMonth";
 import { useRouter, useSearchParams } from "next/navigation";
 
 interface props {
+  day?: string;
+  month?: string;
   year: number;
   monthIndex: number;
 }
@@ -25,15 +27,13 @@ export const monthNames: string[] = [
   "December",
 ];
 
-export const MonthCalendar = ({ monthIndex, year }: props) => {
+export const MonthCalendar = ({ monthIndex, day, month, year }: props) => {
   const now = new Date();
   const today = now.getDate();
   const thisMonth = now.getMonth();
 
   const router = useRouter();
   const searchParams = useSearchParams();
-  const activeDay = Number(searchParams.get("day"));
-  const activeMonth = Number(searchParams.get("month"));
 
   const days = getDayArrayForMonth(year, monthIndex);
   const firstDayOfTheMonthWeekIndex = getFirstDayOfMonthWeekIndex(
@@ -73,23 +73,23 @@ export const MonthCalendar = ({ monthIndex, year }: props) => {
           <div key={ar} className="h-12 w-full"></div>
         ))}
         {/* Render the rest of the days */}
-        {days.map((day) => (
+        {days.map((d) => (
           <button
-            key={day}
+            key={d}
             className={`h-12 w-full text-white text-sm font-medium leading-normal disabled:cursor-not-allowed`}
-            disabled={day < today && monthIndex === thisMonth}
-            onClick={() => handleDateClick(day)}
+            disabled={d < today && monthIndex === thisMonth}
+            onClick={() => handleDateClick(d)}
           >
             <div
               className={`flex size-full items-center justify-center rounded-full  ${
-                activeDay === day && monthIndex === activeMonth
+                Number(day) === d && monthIndex === Number(month)
                   ? "bg-[#13ec5b] text-[#112217]"
-                  : day < today && monthIndex === thisMonth
+                  : d < today && monthIndex === thisMonth
                   ? "hover:bg-none text-gray-500"
                   : "hover:bg-[#22492f]"
               }`}
             >
-              {day}
+              {d}
             </div>
           </button>
         ))}

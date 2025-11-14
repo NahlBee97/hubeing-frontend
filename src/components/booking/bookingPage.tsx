@@ -1,8 +1,15 @@
 import { AppointmentDetails } from "./appointmentDetail";
 import { MonthCalendar } from "./month";
 
-export const BookingPage = () => {
+interface props {
+  day?: string;
+  month?: string;
+  year?: string;
+}
+
+export const BookingPage = ({ day, month, year}: props) => {
   const now = new Date();
+
   const currentMonthIndex = now.getMonth();
   const currentYear = now.getFullYear();
 
@@ -17,14 +24,21 @@ export const BookingPage = () => {
         </div>
         {/* This flex container will wrap calendars on small screens */}
         <div className="flex flex-wrap items-start justify-center gap-6 p-4">
-          <MonthCalendar monthIndex={currentMonthIndex} year={currentYear} />
           <MonthCalendar
+            day={day}
+            month={month}
+            monthIndex={currentMonthIndex}
+            year={currentYear}
+          />
+          <MonthCalendar
+            day={day}
+            month={month}
             monthIndex={currentMonthIndex + 1}
             year={currentYear}
           />
         </div>
 
-        <AppointmentDetails />
+        <AppointmentDetails day={day} month={month} year={year} />
       </div>
     </div>
   );

@@ -7,23 +7,18 @@ import { AppointmentCard } from "./appCard";
 import { useAuthStore } from "@/stores/useAuthStore";
 import api from "@/lib/axios";
 import { IAppointment } from "@/interfaces/dataInterfaces";
-import { useSearchParams } from "next/navigation";
 
-export const AppointmentsPage = () => {
+export const AppointmentsPage = ({isPast = false} : {isPast: boolean} ) => {
   const [appointments, setAppointments] = useState<IAppointment[]>([]);
 
   const { isLoggedIn, user } = useAuthStore();
-
-  const searchParams = useSearchParams();
-
-  const isPast = searchParams.get("past") || "";
 
   useEffect(() => {
     if (!isLoggedIn) return;
 
     const fetchAppointments = async () => {
       try {
-        if (isPast === "true") {
+        if (isPast) {
           const response = await api.get(`/api/appointments/user/${user?.id}?past=${isPast}`);
           setAppointments(response.data.appointments);
         } else {

@@ -3,7 +3,7 @@
 import toast from "react-hot-toast";
 import { ConfirmModal } from "../confirmModal";
 import { useCallback, useEffect, useState } from "react";
-import { usePathname, useRouter, useSearchParams } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import api from "@/lib/axios";
 import { monthNames } from "./month";
 import { useAuthStore } from "@/stores/useAuthStore";
@@ -12,18 +12,20 @@ import { IAppointment } from "@/interfaces/dataInterfaces";
 import { AppointmentCard } from "./appointmentCard";
 import { NoAppointment } from "./noAppointment";
 
-export const AppointmentDetails = () => {
+interface props {
+  day?: string;
+  month?: string;
+  year?: string;
+}
+
+export const AppointmentDetails = ({ day, month, year }: props) => {
   const { isLoggedIn } = useAuthStore();
 
   const router = useRouter();
   const pathname = usePathname();
-  const searchParams = useSearchParams();
 
-  const activeDay = Number(searchParams.get("day"));
-  const activeMonth = Number(searchParams.get("month"));
-  const activeYear = Number(searchParams.get("year"));
+  const activeDateObject = day ? new Date(Number(day), Number(month), Number(year)) : 0;
 
-  const activeDateObject = new Date(activeYear, activeMonth, activeDay);
   const appointmentDate = format(activeDateObject, "yyyy-MM-dd");
 
   const [isConfirmModalOpen, setIsConfirmModalOpen] = useState<boolean>(false);
@@ -53,7 +55,7 @@ export const AppointmentDetails = () => {
   };
 
   const handleClickAdd = () => {
-    if (!activeDay) {
+    if (!day) {
       toast.error("Please Select A Date");
     } else {
       setIsConfirmModalOpen(true);
@@ -95,7 +97,7 @@ export const AppointmentDetails = () => {
         confirmText={isLoggedIn ? "Book" : "Login"}
         title={
           isLoggedIn
-            ? `Book appointment on ${activeDay} ${monthNames[activeMonth]} ${activeYear}?`
+            ? `Book appointment on ${day} ${monthNames[Number(month)]} ${year}?`
             : "Login first to make appointment"
         }
       />
