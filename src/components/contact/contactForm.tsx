@@ -1,4 +1,4 @@
-"use client"
+"use client";
 
 import { useFormik } from "formik";
 import { FormTextarea, FormTextInput } from "../inputs";
@@ -31,28 +31,30 @@ export const ContactForm = () => {
 
   return (
     <form onSubmit={formik.handleSubmit}>
-      <FormTextInput
-        id="name"
-        label="Name"
-        type="text"
-        placeholder=""
-        value={formik.values.name}
-        onChange={formik.handleChange}
-        onBlur={formik.handleBlur}
-        error={formik.errors.name}
-        touched={formik.touched.name}
-      />
-      <FormTextInput
-        id="email"
-        label="Email"
-        type="email"
-        placeholder=""
-        value={formik.values.email}
-        onChange={formik.handleChange}
-        onBlur={formik.handleBlur}
-        error={formik.errors.email}
-        touched={formik.touched.email}
-      />
+      <div className="p-4 space-y-2">
+        <FormTextInput
+          id="name"
+          label="Name"
+          type="text"
+          placeholder=""
+          value={formik.values.name}
+          onChange={formik.handleChange}
+          onBlur={formik.handleBlur}
+          error={formik.errors.name}
+          touched={formik.touched.name}
+        />
+        <FormTextInput
+          id="email"
+          label="Email"
+          type="email"
+          placeholder=""
+          value={formik.values.email}
+          onChange={formik.handleChange}
+          onBlur={formik.handleBlur}
+          error={formik.errors.email}
+          touched={formik.touched.email}
+        />
+      </div>
       <FormTextarea
         name="message"
         placeholder="Your Message"
