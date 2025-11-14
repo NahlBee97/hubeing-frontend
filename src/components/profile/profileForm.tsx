@@ -24,7 +24,7 @@ export const ProfileForm = () => {
     validationSchema: ProfileSchema,
     onSubmit: async (values) => {
       try {
-        await api.post(`/api/users`, {...values});
+        await api.post(`/api/users`, { ...values });
         toast.success("Edit profile success");
       } catch (error) {
         console.error("Fail to edit profile: " + error);
@@ -36,37 +36,39 @@ export const ProfileForm = () => {
   return (
     <div className="layout-content-container flex flex-col max-w-[920px] flex-1">
       <div className="flex flex-wrap justify-between gap-3 p-4">
-        <p className="text-white tracking-light text-3xl md:text-[32px] font-bold leading-tight min-w-72">
-          Settings
+        <p className="text-[#13ec5b] tracking-light text-3xl md:text-[32px] font-bold leading-tight min-w-72">
+          Profile Settings
         </p>
       </div>
 
       <form onSubmit={formik.handleSubmit}>
-        <FormTextInput
-          label="Name"
-          id="name"
-          value={formik.values.name}
-          onChange={formik.handleChange}
-          onBlur={formik.handleBlur}
-          error={
-            formik.touched.name && formik.errors.name
-              ? formik.errors.name
-              : undefined
-          }
-        />
-        <FormTextInput
-          label="Email"
-          type="email"
-          id="email"
-          value={formik.values.email}
-          onChange={formik.handleChange}
-          onBlur={formik.handleBlur}
-          error={
-            formik.touched.email && formik.errors.email
-              ? formik.errors.email
-              : undefined
-          }
-        />
+        <div className="p-4">
+          <FormTextInput
+            label="Name"
+            id="name"
+            value={formik.values.name}
+            onChange={formik.handleChange}
+            onBlur={formik.handleBlur}
+            error={
+              formik.touched.name && formik.errors.name
+                ? formik.errors.name
+                : undefined
+            }
+          />
+          <FormTextInput
+            label="Email"
+            type="email"
+            id="email"
+            value={formik.values.email}
+            onChange={formik.handleChange}
+            onBlur={formik.handleBlur}
+            error={
+              formik.touched.email && formik.errors.email
+                ? formik.errors.email
+                : undefined
+            }
+          />
+        </div>
 
         <div className="flex px-4 py-3 justify-start">
           <FormButton type="submit" disabled={formik.isSubmitting}>

@@ -45,7 +45,8 @@ export const UserNavbar = () => {
       </nav>
 
       {/* Mobile Menu Button (visible on small screens) */}
-      <div className="md:hidden">
+      <div className="md:hidden space-x-2">
+        <ProfileMenu />
         <button
           onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
           className="text-white p-2 rounded-md hover:bg-[#23482f] focus:outline-none focus:ring-2 focus:ring-inset focus:ring-[#13ec5b]"
