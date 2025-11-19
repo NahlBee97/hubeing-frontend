@@ -3,14 +3,10 @@
 import { useState } from "react";
 import { CloseIcon, LogoIcon, MenuIcon } from "../icons";
 import { NavLinks } from "./navlinks";
-import { AuthButtons } from "./authButtons";
 import { useRouter } from "next/navigation";
-import { useAuthStore } from "@/stores/useAuthStore";
-import { ProfileMenu } from "./profileMenu";
 
-export const UserNavbar = () => {
+export const AdminNavbar = () => {
   const router = useRouter();
-  const { isLoggedIn } = useAuthStore();
   // State to manage mobile menu visibility
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
@@ -26,23 +22,12 @@ export const UserNavbar = () => {
           <LogoIcon />
         </div>
         <h2 className="text-white text-lg font-bold leading-tight tracking-[-0.015em]">
-          <span className="text-[#13ec5b]">Hu</span>Being
+          <span className="text-[#13ec5b]">Hu</span>Being Admin Panel
         </h2>
       </div>
 
-      {/* Desktop Navigation (hidden on small screens) */}
-      <nav className="hidden md:flex flex-1 justify-end items-center gap-8">
-        <NavLinks mobile={false} onClickLink={() => null} />
-        {isLoggedIn ? (
-          <ProfileMenu />
-        ) : (
-          <AuthButtons mobile={false} onButtonClick={() => null} />
-        )}
-      </nav>
-
       {/* Mobile Menu Button (visible on small screens) */}
       <div className="md:hidden space-x-2">
-        {isLoggedIn && <ProfileMenu />}
         <button
           onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
           className="text-white p-2 rounded-md hover:bg-[#23482f] focus:outline-none focus:ring-2 focus:ring-inset focus:ring-[#13ec5b]"
@@ -59,11 +44,6 @@ export const UserNavbar = () => {
             <NavLinks
               mobile={true}
               onClickLink={() => setIsMobileMenuOpen(false)}
-            />
-            <div className="border-t border-[#23482f] w-3/4 my-4"></div>
-            <AuthButtons
-              mobile={true}
-              onButtonClick={() => setIsMobileMenuOpen(false)}
             />
           </nav>
         </div>

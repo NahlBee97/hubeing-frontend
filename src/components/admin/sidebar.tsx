@@ -8,7 +8,7 @@ export const Sidebar = () => {
   const pathname = usePathname();
 
   return (
-    <div className="layout-content-container flex flex-col w-full lg:w-80">
+    <div className="hidden layout-content-container md:flex md:flex-col w-full lg:w-80">
       <div className="flex h-full min-h-[700px] flex-col justify-between bg-[#102315] p-4">
         <div className="flex flex-col gap-4">
           <div className="flex flex-col">

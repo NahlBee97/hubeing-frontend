@@ -1,17 +1,27 @@
+"use client";
+
+import { useAuthStore } from "@/stores/useAuthStore";
 import Link from "next/link";
 
 interface props {
   mobile: boolean;
-  isLoggedIn: boolean;
-  onClickLink: () => void
+  onClickLink: () => void;
 }
 
-export const NavLinks = ({ mobile = false, isLoggedIn = true, onClickLink }: props ) => {
-  const loggedInLinks = [
+export const NavLinks = ({ mobile = false, onClickLink }: props) => {
+  const { isLoggedIn, user } = useAuthStore();
+
+  const adminLinks = [
+    { name: "Dashboard", link: "/admin" },
+    { name: "Patient List", link: "/admin/patient" },
+    { name: "Settings", link: "/admin/settings" },
+  ];
+
+  const userLinks = [
     { name: "Home", link: "/" },
     { name: "About", link: "/about" },
-    { name: "Book Appointment", link: "/booking"},
-    { name: "My Appointment", link: "/appointments"},
+    { name: "Book Appointment", link: "/booking" },
+    { name: "My Appointment", link: "/appointments" },
   ];
 
   const links = [
@@ -19,14 +29,18 @@ export const NavLinks = ({ mobile = false, isLoggedIn = true, onClickLink }: pro
     { name: "About", link: "/about" },
   ];
 
-
   return (
     <div
       className={`flex items-center ${
         mobile ? "flex-col gap-6 text-lg" : "flex-row gap-9 text-sm"
       }`}
     >
-      {(isLoggedIn ? loggedInLinks : links).map((link) => (
+      {(isLoggedIn && user?.role === "USER"
+        ? userLinks
+        : isLoggedIn && user?.role === "ADMIN"
+        ? adminLinks
+        : links
+      ).map((link) => (
         <Link
           key={link.name}
           href={link.link}
