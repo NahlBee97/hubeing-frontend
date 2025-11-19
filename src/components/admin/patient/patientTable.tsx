@@ -7,6 +7,7 @@ import api from "@/lib/axios";
 import { format } from "date-fns";
 import { useAuthStore } from "@/stores/useAuthStore";
 import { IAppointment } from "@/interfaces/dataInterfaces";
+import { NoAppointmentsAdminState } from "./noAppointmentAdmin";
 
 interface props {
   day?: string;
@@ -32,7 +33,7 @@ export const PatientTable = ({ day, month, year }: props) => {
     fetchAppointments();
   }, [isLoggedIn, appointmentDate]);
 
-  console.log(appointments);
+  if(appointments.length === 0) return <NoAppointmentsAdminState/>
 
   return (
     <div className="px-4 py-3">
