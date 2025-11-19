@@ -17,30 +17,22 @@ export default function AuthWrapper({
   const { user, isAuthLoading } = useAuthStore();
 
   useEffect(() => {
-    if (isAuthLoading) {
+    if (isAuthLoading) return;
+
+    const isPathAdmin = pathname.startsWith("/admin");
+    const isAdminUser = user?.role === "ADMIN";
+
+    if (isPathAdmin && !isAdminUser) {
+      router.push("/login");
       return;
     }
 
-    const isPathAdmin = pathname.startsWith("/admin");
-    const isPathAuth = pathname === "/login" || pathname === "/register";
-
-    const isPathGeneral = !isPathAdmin && !isPathAuth;
-
-    if (user) {
-      if (user.role === "ADMIN") {
-        if (isPathAdmin) {
-          return;
-        }
-
-        if (isPathGeneral || isPathAuth) {
-          router.push("/admin");
-          return;
-        }
-      }
+    if (isAdminUser && !isPathAdmin) {
+      router.push("/admin");
+      return;
     }
-    
-    return;
-  }, [user, isAuthLoading, pathname, router]);
+
+  }, [isAuthLoading, pathname, user, router]);
 
   return (
     <>

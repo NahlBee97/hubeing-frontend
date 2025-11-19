@@ -4,22 +4,24 @@ import { StatCard } from "./statCard";
 import { AreaChart, BarChart } from "./charts";
 import { useEffect, useState } from "react";
 import api from "@/lib/axios";
+import { useAuthStore } from "@/stores/useAuthStore";
 
 export interface IAppointmentSummary {
   booked: number;
   completed: number;
   cancelledByUser: number;
   cancelledByAdmin: number;
-  totalAppointmentsByMonth: {name: string; value: number}[]
-
+  totalAppointmentsByMonth: { name: string; value: number }[];
 }
 
 export const Dashboard = () => {
+  const { user } = useAuthStore();
   const [appointmentSummary, setAppointmentSummary] =
     useState<IAppointmentSummary | null>(null);
 
   useEffect(() => {
     const fetchAppointmentSummary = async () => {
+      if (!user) return;
       try {
         const response = await api.get("/api/appointments/summary");
         setAppointmentSummary(response.data.summary);
@@ -28,10 +30,13 @@ export const Dashboard = () => {
       }
     };
     fetchAppointmentSummary();
-  }, []);
+  }, [user]);
 
   const totalAppointment = appointmentSummary?.totalAppointmentsByMonth
-    ? Object.values(appointmentSummary.totalAppointmentsByMonth).reduce((acc, point) => acc + point.value, 0)
+    ? Object.values(appointmentSummary.totalAppointmentsByMonth).reduce(
+        (acc, point) => acc + point.value,
+        0
+      )
     : 0;
 
   if (!appointmentSummary) return;
