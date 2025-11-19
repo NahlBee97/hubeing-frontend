@@ -24,7 +24,8 @@ export const AppointmentDetails = ({ day, month, year }: props) => {
   const router = useRouter();
   const pathname = usePathname();
 
-  const activeDateObject = day ? new Date(Number(day), Number(month), Number(year)) : 0;
+  const activeDateObject = day ? new Date(Number(year), Number(month), Number(day)) : 0;
+  console.log(activeDateObject)
 
   const appointmentDate = format(activeDateObject, "yyyy-MM-dd");
 

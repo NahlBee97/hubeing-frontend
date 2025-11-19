@@ -3,7 +3,7 @@
 import { getDayArrayForMonth } from "@/helper/getDaysInMonth";
 import { DayOfWeekHeader } from "./dayOfWeekHeader";
 import { getFirstDayOfMonthWeekIndex } from "@/helper/getFirstDayOfTheMonth";
-import { useRouter, useSearchParams } from "next/navigation";
+import { usePathname, useRouter, useSearchParams } from "next/navigation";
 
 interface props {
   day?: string;
@@ -28,6 +28,7 @@ export const monthNames: string[] = [
 ];
 
 export const MonthCalendar = ({ monthIndex, day, month, year }: props) => {
+  const pathname = usePathname();
   const now = new Date();
   const today = now.getDate();
   const thisMonth = now.getMonth();
@@ -56,7 +57,7 @@ export const MonthCalendar = ({ monthIndex, day, month, year }: props) => {
     params.set("day", day.toString());
 
     // Navigate with new params
-    router.push(`/booking?${params.toString()}`);
+    router.push(`${pathname}?${params.toString()}`);
   };
 
   return (

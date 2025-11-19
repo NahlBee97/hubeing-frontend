@@ -1,12 +1,28 @@
 import { MonthCalendar } from "@/components/booking/month";
 import { PatientTable } from "./patientTable";
 
+const monthNames: string[] = [
+  "January",
+  "February",
+  "March",
+  "April",
+  "May",
+  "June",
+  "July",
+  "August",
+  "September",
+  "October",
+  "November",
+  "December",
+];
+
 interface props {
   day?: string;
   month?: string;
+  year?: string;
 }
 
-export const PatientListPage = ({ day, month}: props) => {
+export const PatientListPage = ({ day, month, year}: props) => {
   const now = new Date();
 
   const currentMonthIndex = now.getMonth();
@@ -34,15 +50,14 @@ export const PatientListPage = ({ day, month}: props) => {
       </div>
       <div className="flex justify-stretch">
         <div className="flex flex-1 flex-col sm:flex-row gap-3 flex-wrap px-4 py-3 justify-between">
-          <button className="flex min-w-[84px] max-w-[480px] cursor-pointer items-center justify-center overflow-hidden rounded-lg h-10 px-4 bg-[#3df56b] text-[#102315] text-sm font-bold leading-normal tracking-[0.015em] hover:bg-opacity-80">
-            <span className="truncate">Add Walk-in</span>
-          </button>
-          <button className="flex min-w-[84px] max-w-[480px] cursor-pointer items-center justify-center overflow-hidden rounded-lg h-10 px-4 bg-transparent text-white text-sm font-bold leading-normal tracking-[0.015em] hover:bg-[#22492c]">
-            <span className="truncate">Cancel All for 07/16/2024</span>
+          <button className="flex min-w-[84px] max-w-[480px] cursor-pointer items-center justify-center overflow-hidden rounded-lg h-10 px-4 text-white bg-[#22492c] text-sm font-bold leading-normal tracking-[0.015em] hover:bg-red-300 hover:text-[#102315]">
+            <span className="truncate">
+              Cancel All for {monthNames[10]} {day}th
+            </span>
           </button>
         </div>
       </div>
-      <PatientTable />
+      <PatientTable day={day} month={month} year={year} />
     </div>
   );
 };
