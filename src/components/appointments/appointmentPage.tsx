@@ -7,8 +7,11 @@ import { AppointmentCard } from "./appCard";
 import { useAuthStore } from "@/stores/useAuthStore";
 import api from "@/lib/axios";
 import { IAppointment } from "@/interfaces/dataInterfaces";
+import { NoAppointmentsState } from "./NoAppointments";
+import { useRouter } from "next/navigation";
 
-export const AppointmentsPage = ({isPast = false} : {isPast: boolean} ) => {
+export const AppointmentsPage = ({ isPast = false }: { isPast: boolean }) => {
+  const router = useRouter();
   const [appointments, setAppointments] = useState<IAppointment[]>([]);
 
   const { isLoggedIn, user } = useAuthStore();
@@ -19,7 +22,9 @@ export const AppointmentsPage = ({isPast = false} : {isPast: boolean} ) => {
     const fetchAppointments = async () => {
       try {
         if (isPast) {
-          const response = await api.get(`/api/appointments/user/${user?.id}?past=${isPast}`);
+          const response = await api.get(
+            `/api/appointments/user/${user?.id}?past=${isPast}`
+          );
           setAppointments(response.data.appointments);
         } else {
           const response = await api.get(`/api/appointments/user/${user?.id}`);
@@ -39,11 +44,15 @@ export const AppointmentsPage = ({isPast = false} : {isPast: boolean} ) => {
       <div className="layout-content-container flex flex-col max-w-[960px] flex-1">
         <AppointmentsHeader />
         <TabNavigation />
-        <div className="space-y-2">
-          {appointments.map((app) => (
-            <AppointmentCard key={app.id} appointment={app} />
-          ))}
-        </div>
+        {appointments.length === 0 ? (
+          <NoAppointmentsState onBookClick={() => router.push("/booking")} />
+        ) : (
+          <div className="space-y-2">
+            {appointments.map((app) => (
+              <AppointmentCard key={app.id} appointment={app} />
+            ))}
+          </div>
+        )}
       </div>
     </div>
   );
