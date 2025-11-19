@@ -1,4 +1,4 @@
-"use client"
+"use client";
 
 import { useEffect, useState } from "react";
 import { TableActionButton } from "./actionButton";
@@ -15,13 +15,10 @@ interface props {
 }
 
 export const PatientTable = ({ day, month, year }: props) => {
-  const {isLoggedIn} = useAuthStore();
+  const { isLoggedIn } = useAuthStore();
   const [appointments, setAppointments] = useState<IAppointment[]>([]);
 
-  const activeDateObject = day
-    ? new Date(Number(year), Number(month), Number(day))
-    : 0;
-    console.log(activeDateObject);
+  const activeDateObject = new Date(Number(year), Number(month), Number(day));
 
   const appointmentDate = format(activeDateObject, "yyyy-MM-dd");
 
@@ -63,7 +60,10 @@ export const PatientTable = ({ day, month, year }: props) => {
           </thead>
           <tbody>
             {appointments.map((appointment) => (
-              <tr key={appointment.queueNumber} className="border-t border-t-[#31683f]">
+              <tr
+                key={appointment.queueNumber}
+                className="border-t border-t-[#31683f]"
+              >
                 <td className="h-[72px] px-4 py-2 text-[#90cb9f] text-sm font-normal leading-normal">
                   {appointment.queueNumber}
                 </td>
@@ -84,4 +84,4 @@ export const PatientTable = ({ day, month, year }: props) => {
       </div>
     </div>
   );
-}; 
+};

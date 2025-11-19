@@ -5,7 +5,13 @@ export default async function Booking({
 }: {
   searchParams: Promise<{ day?: string, month?: string, year?: string }>;
 }) {
-  const { day, month, year} = await searchParams;
+  let { day, month, year} = await searchParams;
+  if (!day) {
+    const now = new Date();
+    day = String(now.getDate());
+    month = String(now.getMonth());
+    year = String(now.getFullYear());
+  }
   return (
     <div className="layout-container flex h-full grow flex-col">
       <BookingPage day={day} month={month} year={year} />

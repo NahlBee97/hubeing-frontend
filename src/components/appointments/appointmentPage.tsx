@@ -7,7 +7,7 @@ import { AppointmentCard } from "./appCard";
 import { useAuthStore } from "@/stores/useAuthStore";
 import api from "@/lib/axios";
 import { IAppointment } from "@/interfaces/dataInterfaces";
-import { NoAppointmentsState } from "./NoAppointments";
+import { NoAppointmentsState } from "./noAppointmentList";
 import { useRouter } from "next/navigation";
 
 export const AppointmentsPage = ({ isPast = false }: { isPast: boolean }) => {

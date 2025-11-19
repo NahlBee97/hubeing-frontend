@@ -24,8 +24,7 @@ export const AppointmentDetails = ({ day, month, year }: props) => {
   const router = useRouter();
   const pathname = usePathname();
 
-  const activeDateObject = day ? new Date(Number(year), Number(month), Number(day)) : 0;
-  console.log(activeDateObject)
+  const activeDateObject = new Date(Number(year), Number(month), Number(day));
 
   const appointmentDate = format(activeDateObject, "yyyy-MM-dd");
 
@@ -56,11 +55,7 @@ export const AppointmentDetails = ({ day, month, year }: props) => {
   };
 
   const handleClickAdd = () => {
-    if (!day) {
-      toast.error("Please Select A Date");
-    } else {
-      setIsConfirmModalOpen(true);
-    }
+    setIsConfirmModalOpen(true);
   };
 
   return (
