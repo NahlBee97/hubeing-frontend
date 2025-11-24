@@ -1,6 +1,6 @@
-import { PatientStatus } from "./patientTable";
+import { AppointmentStatus } from "@/interfaces/enums";
 
-export const TableActionButton = ({ status }: { status: PatientStatus }) => {
+export const TableActionButton = ({ status }: { status: AppointmentStatus }) => {
   let actionText = "";
   if (status === "BOOKED") actionText = "Check-in";
   if (status === "CHECKED_IN") actionText = "Complete";
